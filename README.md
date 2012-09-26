@@ -1,3 +1,17 @@
 # Some Speed Tests
 
-Primarily to reassure myself that I'm not using C++ in an obscenely inefficient way compared to C.
+To reassure myself that I'm not using C++ in an obscenely inefficient way compared to C.
+
+Build instructions (assuming you have [cmake][] installed):
+
+    mkdir -p build
+    cd build
+    cmake ..
+    make
+
+That should generate an executable which you can run:
+
+    hosts/cli/speedy
+
+
+[cmake]:  http://www.cmake.org
