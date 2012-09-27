@@ -1,6 +1,0 @@
-#ifndef SPEEDTESTS_CORE_HASHTEST_H_
-#define SPEEDTESTS_CORE_HASHTEST_H_
-
-void hashtest();
-
-#endif // SPEEDTESTS_CORE_HASHTEST_H_
