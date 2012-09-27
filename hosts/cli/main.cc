@@ -24,8 +24,8 @@ int main(int argc, char **argv)
   printf("Generating tests.\n");
 
   TestRun* tests[] = {
-    NewTestRun("UTHash test", kRuns, hashtest_c, NULL, NULL, NULL, NULL),
-    NewTestRun("Boost hash test", kRuns, hashtest_cc, NULL, NULL, NULL, NULL)
+    NewTestRun("UTHash test add", kRuns, HashtestUTHashAdd, NULL, NULL, HashtestBeforeRun, HashtestAfterRun),
+    NewTestRun("Boost hash test add", kRuns, HashtestBoostAdd, NULL, NULL, HashtestBeforeRun, HashtestAfterRun)
   };
   const size_t kNumTests = sizeof(tests) / sizeof(TestRun*);
 

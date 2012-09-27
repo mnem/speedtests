@@ -10,7 +10,7 @@ extern "C" {
 
 struct TestRun;
 
-typedef void (*TestRunFn)(void);
+typedef void (*TestRunFn)(void *user_data);
 typedef void (*TestRunPrepFn)(struct TestRun*, size_t run);
 
 typedef struct TestRun {
