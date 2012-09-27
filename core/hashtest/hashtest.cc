@@ -39,10 +39,13 @@ void HashtestUTHashAdd(void *user_data)
 {
   SimpleHashable *items = (SimpleHashable *)user_data;
   SimpleHashable *hash = NULL;
+  SimpleHashable copy[kNumKeys];
 
   size_t i;
   for (i = 0; i < kNumKeys; i++) {
-    SimpleHashable *item = &items[i];
+    strcpy(copy[i].key, items[i].key);
+    copy[i].data = items[i].data;
+    SimpleHashable *item = &copy[i];
     HASH_ADD_STR(hash, key, item);
   }
 }
@@ -57,5 +60,19 @@ void HashtestBoostAdd(void *user_data)
   size_t i;
   for (i = 0; i < kNumKeys; i++) {
     hash[items[i].key] = items[i].data;
+  }
+}
+
+#include <map>
+typedef std::map<char *, int> StdHash;
+typedef std::pair<char *, int> StdPair;
+void HashtestStdMapAdd(void *user_data)
+{
+  SimpleHashable *items = (SimpleHashable *)user_data;
+  StdHash hash;
+
+  size_t i;
+  for (i = 0; i < kNumKeys; i++) {
+    hash.insert(StdPair(items[i].key, items[i].data));
   }
 }

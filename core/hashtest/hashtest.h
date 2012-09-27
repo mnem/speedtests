@@ -12,6 +12,7 @@ void HashtestAfterRun(TestRun *test_run, size_t run);
 
 void HashtestUTHashAdd(void *user_data);
 void HashtestBoostAdd(void *user_data);
+void HashtestStdMapAdd(void *user_data);
 
 #ifdef __cplusplus
 }
