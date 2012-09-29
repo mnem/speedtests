@@ -1,51 +1,15 @@
-#include "hashtest/hashtest.h"
+#include "cli_test_monitor.h"
+#include "hash_test/hash_test.h"
 
-#include "testcore/testcore.h"
+int main(int argc, char const *argv[]) {
+  CLITestMonitor monitor;
+  SpeedTests::Runner runner(&monitor);
 
-#include <stdio.h>
+  runner.Add(new HashTestUTHashAdd());
+  runner.Add(new HashTestBoostAdd());
+  runner.Add(new HashTestStdAdd());
 
-const size_t kRuns = 10000;
-const size_t kRunsPerProgressBlip = kRuns / 40;
-
-extern "C" {
-void PrintProgress(TestRun *test_run, size_t run) {
-  if (run % kRunsPerProgressBlip == 0) printf("#");
-}
-
-void PrintTitle(TestRun *test_run, size_t run) {
-  printf("\nRunning: %s\n", test_run->description);
-}
-}
-
-int main(int argc, char **argv)
-{
-  setbuf(stdout, NULL);
-
-  printf("Generating tests.\n");
-
-  TestRun* tests[] = {
-    NewTestRun("UTHash test add", kRuns, HashtestUTHashAdd, NULL, NULL, HashtestBeforeRun, HashtestAfterRun),
-    NewTestRun("Boost hash test add", kRuns, HashtestBoostAdd, NULL, NULL, HashtestBeforeRun, HashtestAfterRun),
-    NewTestRun("Std::map hash test add", kRuns, HashtestStdMapAdd, NULL, NULL, HashtestBeforeRun, HashtestAfterRun)
-  };
-  const size_t kNumTests = sizeof(tests) / sizeof(TestRun*);
-
-  printf("Running each test %zu times.\n", kRuns);
-  for (size_t i = 0; i < kNumTests; i++) {
-    RunTest(tests[i], PrintProgress, NULL, PrintTitle, NULL);
-  }
-
-  printf("\n\nResults:");
-
-  for (size_t i = 0; i < kNumTests; i++) {
-    PrintTestRun(tests[i]);
-  }
-
-  printf("\nTidying up.\n\n");
-
-  for (size_t i = 0; i < kNumTests; i++) {
-    DeleteTestRun(tests[i]);
-  }
+  runner.Run();
 
   return 0;
 }

@@ -5,5 +5,11 @@ include_directories(${SPEEDTESTS_SOURCE_DIR}/core)
 
 link_directories(${SPEEDTESTS_BINARY_DIR}/hosts/cli)
 
-add_executable(speedy main.cc)
+add_executable(
+  speedy
+
+  main.cc
+  cli_test_monitor.cc
+)
+
 target_link_libraries(speedy ${TESTLIBS})
