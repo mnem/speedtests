@@ -4,8 +4,8 @@ To reassure myself that I'm not using C++ in an obscenely inefficient way compar
 
 Build instructions (assuming you have [cmake][] installed):
 
-    mkdir -p build
-    cd build
+    mkdir -p build.cli
+    cd build.cli
     cmake ..
     make
 
