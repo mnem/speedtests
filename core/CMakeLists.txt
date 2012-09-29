@@ -10,4 +10,7 @@ foreach(testlib ${TESTLIBS})
   add_library(${testlib} ${testlib}/${testlib}.cc)
 endforeach(testlib)
 
+set(TESTLIBS ${TESTLIBS} all_tests)
+add_library(all_tests all_tests.cc)
+
 set(TESTLIBS ${TESTLIBS} PARENT_SCOPE)
