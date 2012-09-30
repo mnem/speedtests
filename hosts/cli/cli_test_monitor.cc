@@ -36,17 +36,21 @@ void CLITestMonitor::BeforeEverything(const st::Runner &runner) {
 }
 
 void CLITestMonitor::AfterEverything(const st::Runner &runner) {
-  printf("\n\nTesting finished!.\n\n          Results\n          =======\n");
+  printf("\n\nTesting finished!.\n\nResults\n");
 
+  printf("---------------------+-----+----------------+----------------+----------------\n");
+  printf("%-21s|%5s|%16s|%16s|%16s\n", "Test", "Loops", "Average:seconds", "Minimum:seconds", "Maximum:seconds" );
+  printf("---------------------+-----+----------------+----------------+----------------\n");
+
+  const int kDescriptionMax = 16;
+  char snipped[kDescriptionMax+1] = {'\0'};
   const st::SpeedTestVector &tests = runner.tests();
   for (size_t i = 0; i < tests.size(); ++i) {
-    printf(
-        "\n--=[  %s  ]=--\n"
-        "  Iterations :%7zu\n"
-        "  Average    :%7zu (%fs)\n"
-        "  Minimum    :%7zu (%fs)\n"
-        "  Maximum    :%7zu (%fs)\n",
-        tests[i]->description(),
+    strncpy(snipped, tests[i]->description(), kDescriptionMax + 1);
+    snipped[kDescriptionMax] = '\0';
+
+    printf("%-21s|%5zu|%6zu:%9f|%6zu:%9f|%6zu:%9f\n",
+        snipped,
         tests[i]->iterations(),
         (size_t)tests[i]->average_time(), tests[i]->average_time_seconds(),
         (size_t)tests[i]->minimum_time(), tests[i]->minimum_time_seconds(),

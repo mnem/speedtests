@@ -27,7 +27,7 @@ class HashTestUTHashBase : public SpeedTests::SpeedTest {
 class HashTestUTHashAdd : public HashTestUTHashBase {
  public:
   virtual void Test();
-  virtual const char* description() const { return "UTHash: Add items test."; };
+  virtual const char* description() const { return "UTHash: Add"; };
 };
 
 class HashTestUTHashFind : public HashTestUTHashBase {
@@ -37,7 +37,7 @@ class HashTestUTHashFind : public HashTestUTHashBase {
   virtual void AfterTest() {};
   virtual void BeforeTestIterations();
   virtual void AfterTestIterations();
-  virtual const char* description() const { return "UTHash: Find items test."; };
+  virtual const char* description() const { return "UTHash: Find"; };
 };
 
 ////////////////////////////////////////
@@ -55,7 +55,7 @@ class HashTestBoostBase : public SpeedTests::SpeedTest {
 class HashTestBoostAdd : public HashTestBoostBase {
  public:
   virtual void Test();
-  virtual const char* description() const { return "Boost: Add items test."; };
+  virtual const char* description() const { return "Boost: Add"; };
 };
 
 class HashTestBoostFind : public HashTestBoostBase {
@@ -65,7 +65,7 @@ class HashTestBoostFind : public HashTestBoostBase {
   virtual void AfterTest() {};
   virtual void BeforeTestIterations();
   virtual void AfterTestIterations();
-  virtual const char* description() const { return "Boost: Find items test."; };
+  virtual const char* description() const { return "Boost: Find"; };
 };
 
 ////////////////////////////////////////
@@ -83,7 +83,7 @@ class HashTestStdBase : public SpeedTests::SpeedTest {
 class HashTestStdAdd : public HashTestStdBase {
  public:
   virtual void Test();
-  virtual const char* description() const { return "Std: Add items test."; };
+  virtual const char* description() const { return "Std: Add"; };
 };
 
 class HashTestStdFind : public HashTestStdBase {
@@ -93,7 +93,7 @@ class HashTestStdFind : public HashTestStdBase {
   virtual void AfterTest() {};
   virtual void BeforeTestIterations();
   virtual void AfterTestIterations();
-  virtual const char* description() const { return "Std: Find items test."; };
+  virtual const char* description() const { return "Std: Find"; };
 };
 
 #endif // SPEEDTESTS_CORE_HASHTEST_H_
