@@ -15,8 +15,8 @@
 class LMiOSTestMonitor : public SpeedTests::TestProgressInterface
 {
 public:
-	LMiOSTestMonitor() {setbuf(stdout, NULL);};
-	virtual ~LMiOSTestMonitor() {};
+	LMiOSTestMonitor() : results_(NULL) {setbuf(stdout, NULL);};
+	virtual ~LMiOSTestMonitor() { delete[] results_; };
 	
 	virtual void BeforeTestIterations(const SpeedTests::Runner &runner, const SpeedTests::SpeedTest &test);
 	virtual void AfterTestIterations(const SpeedTests::Runner &runner, const SpeedTests::SpeedTest &test);
@@ -25,6 +25,11 @@ public:
 	virtual void TestAdded(const SpeedTests::Runner &runner, const SpeedTests::SpeedTest &test);
 	virtual void BeforeEverything(const SpeedTests::Runner &runner);
 	virtual void AfterEverything(const SpeedTests::Runner &runner);
+	
+	const char* results() const { return results_; };
+
+private:
+	char *results_;
 };
 
 #endif /* defined(__speedy__LMiOSTestMonitor__) */

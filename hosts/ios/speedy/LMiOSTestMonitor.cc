@@ -29,11 +29,17 @@ void LMiOSTestMonitor::BeforeEverything(const st::Runner &runner) {
 }
 
 void LMiOSTestMonitor::AfterEverything(const st::Runner &runner) {
-	printf("\n\nTesting finished!.\n\nResults\n");
+	const int kStringMax = 4096;
+	results_ = new char[kStringMax];
+	results_[0] = '\0';
 	
-	printf("---------------------+-----+----------------+----------------+----------------\n");
-	printf("%-21s|%5s|%16s|%16s|%16s\n", "Test", "Loops", "Average:seconds", "Minimum:seconds", "Maximum:seconds" );
-	printf("---------------------+-----+----------------+----------------+----------------\n");
+	const int kLineMax = 100;
+	char line[kLineMax+1] = {0};
+	
+	strncat(results_, "---------------------+-----+----------------+----------------+----------------\n", kStringMax);
+	snprintf(line, kLineMax, "%-21s|%5s|%16s|%16s|%16s\n", "Test", "Loops", "Average:seconds", "Minimum:seconds", "Maximum:seconds");
+	strncat(results_, line, kStringMax);
+	strncat(results_, "---------------------+-----+----------------+----------------+----------------\n", kStringMax);
 	
 	const int kDescriptionMax = 16;
 	char snipped[kDescriptionMax+1] = {'\0'};
@@ -42,11 +48,15 @@ void LMiOSTestMonitor::AfterEverything(const st::Runner &runner) {
 		strncpy(snipped, tests[i]->description(), kDescriptionMax + 1);
 		snipped[kDescriptionMax] = '\0';
 		
-		printf("%-21s|%5zu|%6zu:%9f|%6zu:%9f|%6zu:%9f\n",
+		snprintf(line, kLineMax, "%-21s|%5zu|%6zu:%9f|%6zu:%9f|%6zu:%9f\n",
 			   snipped,
 			   tests[i]->iterations(),
 			   (size_t)tests[i]->average_time(), tests[i]->average_time_seconds(),
 			   (size_t)tests[i]->minimum_time(), tests[i]->minimum_time_seconds(),
 			   (size_t)tests[i]->maximum_time(), tests[i]->maximum_time_seconds());
+		
+		strncat(results_, line, kStringMax);
 	}
+	
+	results_[kStringMax-1] = '\0';
 }

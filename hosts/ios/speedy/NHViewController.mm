@@ -24,6 +24,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 	
+	[self.textView setContentSize:CGSizeMake(4096, 2048)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,6 +39,12 @@
 	SpeedTests::Runner runner(&monitor);
 	SpeedTests::AddAllTests(runner);
 	runner.Run();
+	
+	self.textView.text = [NSString stringWithUTF8String:monitor.results()];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+{
+	return UIInterfaceOrientationIsLandscape(orientation);
+}
 @end
