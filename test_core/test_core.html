@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>test_core/test_core</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="test_core/test_core"><meta name="groc-project-path" content="core/test_core/test_core.cc"><meta name="groc-github-url" content="https://github.com/mnem/speedtests"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/mnem/speedtests/blob/master/core/test_core/test_core.cc">core/test_core/test_core.cc</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="cp">#include &quot;test_core.h&quot;</span>
+<!DOCTYPE html><html lang="en"><head><title>test_core/test_core</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="test_core/test_core"><meta name="groc-project-path" content="core/test_core/test_core.cc"><meta name="groc-github-url" content="https://github.com/mnem/speedtests"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/mnem/speedtests/blob/master/core/test_core/test_core.cc">core/test_core/test_core.cc</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="test-core">Test Core</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="cp">#include &quot;test_core.h&quot;</span>
 <span class="cp">#include &lt;memory.h&gt;</span>
 <span class="cp">#include &lt;assert.h&gt;</span>
 <span class="cp">#include &lt;string.h&gt;</span>
@@ -6,21 +6,24 @@
 <span class="cp">#include &lt;limits.h&gt;</span>
 <span class="cp">#include &lt;stdio.h&gt;</span>
 
-<span class="k">namespace</span> <span class="n">SpeedTests</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">SpeedTests</span> <span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="total-time">total_time</h2>
 
-<span class="n">clock_t</span> <span class="n">SpeedTest</span><span class="o">::</span><span class="n">total_time</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<p>Returns the total run time for all the tests.</p></div></div><div class="code"><div class="wrapper"><span class="n">clock_t</span> <span class="n">SpeedTest</span><span class="o">::</span><span class="n">total_time</span><span class="p">()</span> <span class="k">const</span>
+<span class="p">{</span>
   <span class="n">clock_t</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
   <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">iteration_timings_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">total</span> <span class="o">+=</span> <span class="n">iteration_timings_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
   <span class="p">}</span>
   <span class="k">return</span> <span class="n">total</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="average-time">average_time</h2>
 
-<span class="n">clock_t</span> <span class="n">SpeedTest</span><span class="o">::</span><span class="n">average_time</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<p>Returns the mean average time for the tests.</p></div></div><div class="code"><div class="wrapper"><span class="n">clock_t</span> <span class="n">SpeedTest</span><span class="o">::</span><span class="n">average_time</span><span class="p">()</span> <span class="k">const</span>
+<span class="p">{</span>
   <span class="k">return</span> <span class="n">total_time</span><span class="p">()</span> <span class="o">/</span> <span class="n">iteration_timings_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-<span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="minimum-time">minimum_time</h2>
 
-<span class="n">clock_t</span> <span class="n">SpeedTest</span><span class="o">::</span><span class="n">minimum_time</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<p>Returns the shortest run time for a test.</p></div></div><div class="code"><div class="wrapper"><span class="n">clock_t</span> <span class="n">SpeedTest</span><span class="o">::</span><span class="n">minimum_time</span><span class="p">()</span> <span class="k">const</span>
+<span class="p">{</span>
   <span class="n">clock_t</span> <span class="n">minimum</span> <span class="o">=</span> <span class="n">iteration_timings_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">iteration_timings_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
   <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">iteration_timings_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">iteration_timings_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">minimum</span><span class="p">)</span> <span class="p">{</span>
@@ -28,9 +31,10 @@
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="k">return</span> <span class="n">minimum</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="minimum-time">minimum_time</h2>
 
-<span class="n">clock_t</span> <span class="n">SpeedTest</span><span class="o">::</span><span class="n">maximum_time</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<p>Returns the maximum run time for a test.</p></div></div><div class="code"><div class="wrapper"><span class="n">clock_t</span> <span class="n">SpeedTest</span><span class="o">::</span><span class="n">maximum_time</span><span class="p">()</span> <span class="k">const</span>
+<span class="p">{</span>
   <span class="n">clock_t</span> <span class="n">maximum</span> <span class="o">=</span> <span class="n">iteration_timings_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">iteration_timings_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
   <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">iteration_timings_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">iteration_timings_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">maximum</span><span class="p">)</span> <span class="p">{</span>
@@ -38,28 +42,49 @@
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="k">return</span> <span class="n">maximum</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="runner">Runner</h2>
 
-<span class="n">Runner</span><span class="o">::</span><span class="n">Runner</span><span class="p">(</span><span class="n">TestProgressInterface</span> <span class="o">*</span><span class="n">monitor</span><span class="p">)</span> <span class="p">{</span>
+<p>Creates a test runner, optionally using the passed
+monitor to output progress and results. <code>monitor</code>
+may be null.</p></div></div><div class="code"><div class="wrapper"><span class="n">Runner</span><span class="o">::</span><span class="n">Runner</span><span class="p">(</span><span class="n">TestProgressInterface</span> <span class="o">*</span><span class="n">monitor</span><span class="p">)</span>
+<span class="p">{</span>
   <span class="n">also_destroy_tests_on_destruction_</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
   <span class="n">monitor_</span> <span class="o">=</span> <span class="n">monitor</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="runner">~Runner</h2>
 
-<span class="n">Runner</span><span class="o">::~</span><span class="n">Runner</span><span class="p">()</span> <span class="p">{</span>
+<p>Deletes the runner, and also calls delete
+on each added test if <code>also_destroy_tests_on_destruction</code>
+is true</p></div></div><div class="code"><div class="wrapper"><span class="n">Runner</span><span class="o">::~</span><span class="n">Runner</span><span class="p">()</span>
+<span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">also_destroy_tests_on_destruction_</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">test_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">test_index</span> <span class="o">&lt;</span> <span class="n">tests_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">test_index</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">delete</span> <span class="n">tests_</span><span class="p">[</span><span class="n">test_index</span><span class="p">];</span>
       <span class="n">tests_</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
     <span class="p">}</span>
   <span class="p">}</span>
-<span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="add">Add</h2>
 
-<span class="kt">void</span> <span class="n">Runner</span><span class="o">::</span><span class="n">Add</span><span class="p">(</span><span class="n">SpeedTest</span> <span class="o">*</span><span class="n">test</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">tests_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">test</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">TestAdded</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">);</span>
-<span class="p">}</span>
+<p>Adds a new test to be run. The test is only stored, it
+will be run when Runner::Run() is called.</p>
 
-<span class="kt">void</span> <span class="n">Runner</span><span class="o">::</span><span class="n">Run</span><span class="p">()</span> <span class="p">{</span>
+<p>Will report the test being added to the monitor, if
+a monitor was set on creation of Runner.</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">Runner</span><span class="o">::</span><span class="n">Add</span><span class="p">(</span><span class="n">SpeedTest</span> <span class="o">*</span><span class="n">test</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tests_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">test</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">TestAdded</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="run">Run</h2>
+
+<p>Runs all added test, reporting progress to the test
+monitor as appropriate (and if a test monitor was
+set during creation).</p>
+
+<p>Each test is timed and may be queried afterwards for
+run time statistics.</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">Runner</span><span class="o">::</span><span class="n">Run</span><span class="p">()</span>
+<span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">BeforeEverything</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span>
 
   <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">test_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">test_index</span> <span class="o">&lt;</span> <span class="n">tests_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">test_index</span><span class="p">)</span> <span class="p">{</span>
@@ -89,36 +114,4 @@
   <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">AfterEverything</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="p">}</span> <span class="c1">// namspace SpeedTests</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>void SPrintTestRun(TestRun* test<em>run, char *string, size</em>t length) {
-  assert(test_run);
-  assert(string);
-  assert(length > 0);</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>size<em>t valid</em>reading<em>count = 0;
-  clock</em>t average = 0;
-  clock<em>t minimum = UINT</em>MAX;
-  clock<em>t maximum = 0;
-  size</em>t i;
-  for (i = 0; i &lt; test<em>run->runs; i++) {
-    int reading = test</em>run->run<em>durations[i];
-    if (reading >= 0) {
-      ++valid</em>reading_count;
-      average += reading;
-      if (reading &lt; minimum) minimum = reading;
-      if (reading > maximum) maximum = reading;
-    }
-  }</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>if (valid<em>reading</em>count > 0) {
-    average /= valid<em>reading</em>count;
-  }</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>double average<em>seconds = (double)average / CLOCKS</em>PER<em>SEC;
-  double minimum</em>seconds = (double)minimum / CLOCKS<em>PER</em>SEC;
-  double maximum<em>seconds = (double)maximum / CLOCKS</em>PER_SEC;</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>snprintf(string, length,
-    "\n--=[  %s  ]=--\n"
-    "  Valid runs:%6zu\n"
-    "  Average   :%7zu (%fs)\n"
-    "  Minimum   :%7zu (%fs)\n"
-    "  Maximum   :%7zu (%fs)\n",
-    test<em>run->description,
-    valid</em>reading<em>count,
-    (size</em>t)average, average<em>seconds,
-    (size</em>t)minimum, minimum<em>seconds,
-    (size</em>t)maximum, maximum_seconds);</p></div></div><div class="code"><div class="wrapper"><span class="c1">// }</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>void PrintTestRun(TestRun* test<em>run) {
-  assert(test</em>run);</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>const size<em>t buffer</em>size = 1024;
-  char buffer[buffer_size];</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>SPrintTestRun(test<em>run, buffer, buffer</em>size);</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>printf("%s", buffer);</p></div></div><div class="code"><div class="wrapper"><span class="c1">// }</span></div></div></div></div></body></html>
+<span class="p">}</span> <span class="c1">// namespace SpeedTests</span></div></div></div></div></body></html>

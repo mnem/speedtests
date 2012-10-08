@@ -1,18 +1,17 @@
-<!DOCTYPE html><html lang="en"><head><title>all_tests</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="all_tests"><meta name="groc-project-path" content="core/all_tests.cc"><meta name="groc-github-url" content="https://github.com/mnem/speedtests"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/mnem/speedtests/blob/master/core/all_tests.cc">core/all_tests.cc</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="cp">#include &quot;all_tests.h&quot;</span>
+<!DOCTYPE html><html lang="en"><head><title>all_tests</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="all_tests"><meta name="groc-project-path" content="core/all_tests.cc"><meta name="groc-github-url" content="https://github.com/mnem/speedtests"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/mnem/speedtests/blob/master/core/all_tests.cc">core/all_tests.cc</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="all-speed-tests">All speed tests</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="cp">#include &quot;all_tests.h&quot;</span>
 <span class="cp">#include &quot;test_core/test_core.h&quot;</span>
 <span class="cp">#include &quot;hash_test/hash_test.h&quot;</span>
 
-<span class="k">namespace</span> <span class="n">SpeedTests</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">SpeedTests</span>
+<span class="p">{</span>
 
-<span class="kt">void</span> <span class="n">AddAllTests</span><span class="p">(</span><span class="n">Runner</span> <span class="o">&amp;</span><span class="n">runner</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">runner</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">HashTestUTHashAdd</span><span class="p">());</span>
+<span class="kt">void</span> <span class="n">AddAllTests</span><span class="p">(</span><span class="n">Runner</span> <span class="o">&amp;</span><span class="n">runner</span><span class="p">)</span>
+<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="hash-map-tests">Hash map tests</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper">  <span class="n">runner</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">HashTestUTHashAdd</span><span class="p">());</span>
   <span class="n">runner</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">HashTestUTHashFind</span><span class="p">());</span>
-
   <span class="n">runner</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">HashTestBoostAdd</span><span class="p">());</span>
   <span class="n">runner</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">HashTestBoostFind</span><span class="p">());</span>
-
   <span class="n">runner</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">HashTestStdAdd</span><span class="p">());</span>
   <span class="n">runner</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">HashTestStdFind</span><span class="p">());</span>
 <span class="p">}</span>
 
-<span class="p">}</span> <span class="c1">// SpeedTests</span></div></div></div></div></body></html>
+<span class="p">}</span> <span class="c1">// namespace SpeedTests</span></div></div></div></div></body></html>
