@@ -1,0 +1,4 @@
+{
+  "glob": ["core/**/*.cc", "external/**/*.{cc,mm}", "README.md"],
+  "github": true
+}
