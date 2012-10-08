@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="en"><head><title>hash_test/hash_test</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="hash_test/hash_test"><meta name="groc-project-path" content="core/hash_test/hash_test.cc"><meta name="groc-github-url" content="https://github.com/mnem/speedtests"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/mnem/speedtests/blob/master/core/hash_test/hash_test.cc">core/hash_test/hash_test.cc</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="cp">#include &quot;hash_test.h&quot;</span>
+<span class="cp">#include &lt;unistd.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;memory.h&gt;</span>
+<span class="cp">#include &lt;assert.h&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>//////////////////////////////////////</p></div></div><div class="code"><div class="wrapper"><span class="k">const</span> <span class="n">size_t</span> <span class="n">kKeyMaxLength</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">size_t</span> <span class="n">kNumKeys</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">SimpleHashable</span> <span class="p">{</span>
+  <span class="n">UT_hash_handle</span> <span class="n">hh</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">key</span><span class="p">[</span><span class="n">kKeyMaxLength</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">SimpleHashable</span><span class="p">;</span>
+
+<span class="n">TestItemStore</span><span class="o">::</span><span class="n">TestItemStore</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleHashable</span><span class="p">[</span><span class="n">kNumKeys</span><span class="p">];</span>
+  <span class="n">memset</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">items</span><span class="p">)</span> <span class="o">*</span> <span class="n">kNumKeys</span><span class="p">);</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">snprintf</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">kKeyMaxLength</span><span class="p">,</span> <span class="s">&quot;k%zu:%zu&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">data</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">TestItemStore</span><span class="o">::~</span><span class="n">TestItemStore</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">delete</span><span class="p">[]</span> <span class="n">items</span><span class="p">;</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>//////////////////////////////////////</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">HashTestUTHashBase</span><span class="o">::</span><span class="n">BeforeTest</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">hash_</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestUTHashBase</span><span class="o">::</span><span class="n">AfterTest</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">SimpleHashable</span> <span class="o">*</span><span class="n">current</span><span class="p">;</span>
+    <span class="n">SimpleHashable</span> <span class="o">*</span><span class="n">temp</span><span class="p">;</span>
+    <span class="n">HASH_ITER</span><span class="p">(</span><span class="n">hh</span><span class="p">,</span> <span class="n">hash_</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">HASH_DEL</span><span class="p">(</span><span class="n">hash_</span><span class="p">,</span> <span class="n">current</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestUTHashAdd</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">HASH_ADD_STR</span><span class="p">(</span><span class="n">hash_</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestUTHashFind</span><span class="o">::</span><span class="n">BeforeTestIterations</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">hash_</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">HASH_ADD_STR</span><span class="p">(</span><span class="n">hash_</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[(</span><span class="n">kNumKeys</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">]));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestUTHashFind</span><span class="o">::</span><span class="n">AfterTestIterations</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">SimpleHashable</span> <span class="o">*</span><span class="n">current</span><span class="p">;</span>
+    <span class="n">SimpleHashable</span> <span class="o">*</span><span class="n">temp</span><span class="p">;</span>
+    <span class="n">HASH_ITER</span><span class="p">(</span><span class="n">hh</span><span class="p">,</span> <span class="n">hash_</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">HASH_DEL</span><span class="p">(</span><span class="n">hash_</span><span class="p">,</span> <span class="n">current</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestUTHashFind</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">SimpleHashable</span> <span class="o">*</span><span class="n">found</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">HASH_FIND_STR</span><span class="p">(</span><span class="n">hash_</span><span class="p">,</span> <span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">found</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">found</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>//////////////////////////////////////</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">HashTestBoostBase</span><span class="o">::</span><span class="n">BeforeTest</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">hash_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BoostMap</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestBoostBase</span><span class="o">::</span><span class="n">AfterTest</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">delete</span> <span class="n">hash_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">StdPair</span><span class="p">;</span>
+<span class="kt">void</span> <span class="n">HashTestBoostAdd</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">hash_</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">StdPair</span><span class="p">(</span><span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">data</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestBoostFind</span><span class="o">::</span><span class="n">BeforeTestIterations</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">hash_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BoostMap</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">hash_</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">StdPair</span><span class="p">(</span><span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[(</span><span class="n">kNumKeys</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[(</span><span class="n">kNumKeys</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">].</span><span class="n">data</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestBoostFind</span><span class="o">::</span><span class="n">AfterTestIterations</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">delete</span> <span class="n">hash_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestBoostFind</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">BoostMap</span><span class="o">::</span><span class="n">iterator</span> <span class="n">found</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="n">hash_</span><span class="o">-&gt;</span><span class="n">find</span><span class="p">(</span><span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">found</span> <span class="o">!=</span> <span class="n">hash_</span><span class="o">-&gt;</span><span class="n">end</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>//////////////////////////////////////</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">HashTestStdBase</span><span class="o">::</span><span class="n">BeforeTest</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">hash_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StdMap</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestStdBase</span><span class="o">::</span><span class="n">AfterTest</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">delete</span> <span class="n">hash_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestStdAdd</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">hash_</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">StdPair</span><span class="p">(</span><span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">data</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestStdFind</span><span class="o">::</span><span class="n">BeforeTestIterations</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">hash_</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StdMap</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">hash_</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">StdPair</span><span class="p">(</span><span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[(</span><span class="n">kNumKeys</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">,</span> <span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[(</span><span class="n">kNumKeys</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">].</span><span class="n">data</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestStdFind</span><span class="o">::</span><span class="n">AfterTestIterations</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">delete</span> <span class="n">hash_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">HashTestStdFind</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">StdMap</span><span class="o">::</span><span class="n">iterator</span> <span class="n">found</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumKeys</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="n">hash_</span><span class="o">-&gt;</span><span class="n">find</span><span class="p">(</span><span class="n">test_items</span><span class="p">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">found</span> <span class="o">!=</span> <span class="n">hash_</span><span class="o">-&gt;</span><span class="n">end</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">}</span></div></div></div></div></body></html>
