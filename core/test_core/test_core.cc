@@ -1,3 +1,6 @@
+//
+// # Test Core
+//
 #include "test_core.h"
 #include <memory.h>
 #include <assert.h>
@@ -8,7 +11,11 @@
 
 namespace SpeedTests {
 
-clock_t SpeedTest::total_time() const {
+// ## total_time
+//
+// Returns the total run time for all the tests.
+clock_t SpeedTest::total_time() const
+{
   clock_t total = 0;
   for (size_t i = 0; i < iteration_timings_.size(); ++i) {
     total += iteration_timings_[i];
@@ -16,11 +23,19 @@ clock_t SpeedTest::total_time() const {
   return total;
 }
 
-clock_t SpeedTest::average_time() const {
+// ## average_time
+//
+// Returns the mean average time for the tests.
+clock_t SpeedTest::average_time() const
+{
   return total_time() / iteration_timings_.size();
 }
 
-clock_t SpeedTest::minimum_time() const {
+// ## minimum_time
+//
+// Returns the shortest run time for a test.
+clock_t SpeedTest::minimum_time() const
+{
   clock_t minimum = iteration_timings_.size() > 0 ? iteration_timings_[0] : 0;
   for (size_t i = 1; i < iteration_timings_.size(); ++i) {
     if (iteration_timings_[i] < minimum) {
@@ -30,7 +45,12 @@ clock_t SpeedTest::minimum_time() const {
   return minimum;
 }
 
-clock_t SpeedTest::maximum_time() const {
+
+// ## minimum_time
+//
+// Returns the maximum run time for a test.
+clock_t SpeedTest::maximum_time() const
+{
   clock_t maximum = iteration_timings_.size() > 0 ? iteration_timings_[0] : 0;
   for (size_t i = 1; i < iteration_timings_.size(); ++i) {
     if (iteration_timings_[i] > maximum) {
@@ -40,12 +60,26 @@ clock_t SpeedTest::maximum_time() const {
   return maximum;
 }
 
-Runner::Runner(TestProgressInterface *monitor) {
+
+// ## Runner
+//
+// Creates a test runner, optionally using the passed
+// monitor to output progress and results. `monitor`
+// may be null.
+Runner::Runner(TestProgressInterface *monitor)
+{
   also_destroy_tests_on_destruction_ = true;
   monitor_ = monitor;
 }
 
-Runner::~Runner() {
+
+// ## ~Runner
+//
+// Deletes the runner, and also calls delete
+// on each added test if `also_destroy_tests_on_destruction`
+// is true
+Runner::~Runner()
+{
   if (also_destroy_tests_on_destruction_) {
     for (size_t test_index = 0; test_index < tests_.size(); ++test_index) {
       delete tests_[test_index];
@@ -54,12 +88,33 @@ Runner::~Runner() {
   }
 }
 
-void Runner::Add(SpeedTest *test) {
-  tests_.push_back(test);
-  if (monitor_) monitor_->TestAdded(*this, *test);
+// ## Add
+//
+// Adds a new test to be run. The test is only stored, it
+// will be run when Runner::Run() is called.
+//
+// Will report the test being added to the monitor, if
+// a monitor was set on creation of Runner.
+void Runner::Add(SpeedTest *test)
+{
+  if (test) {
+    tests_.push_back(test);
+    if (monitor_) {
+      monitor_->TestAdded(*this, *test);
+    }
+  }
 }
 
-void Runner::Run() {
+// ## Run
+//
+// Runs all added test, reporting progress to the test
+// monitor as appropriate (and if a test monitor was
+// set during creation).
+//
+// Each test is timed and may be queried afterwards for
+// run time statistics.
+void Runner::Run()
+{
   if (monitor_) monitor_->BeforeEverything(*this);
 
   for (size_t test_index = 0; test_index < tests_.size(); ++test_index) {
@@ -89,56 +144,4 @@ void Runner::Run() {
   if (monitor_) monitor_->AfterEverything(*this);
 }
 
-} // namspace SpeedTests
-
-// void SPrintTestRun(TestRun* test_run, char *string, size_t length) {
-//   assert(test_run);
-//   assert(string);
-//   assert(length > 0);
-
-//   size_t valid_reading_count = 0;
-//   clock_t average = 0;
-//   clock_t minimum = UINT_MAX;
-//   clock_t maximum = 0;
-//   size_t i;
-//   for (i = 0; i < test_run->runs; i++) {
-//     int reading = test_run->run_durations[i];
-//     if (reading >= 0) {
-//       ++valid_reading_count;
-//       average += reading;
-//       if (reading < minimum) minimum = reading;
-//       if (reading > maximum) maximum = reading;
-//     }
-//   }
-
-//   if (valid_reading_count > 0) {
-//     average /= valid_reading_count;
-//   }
-
-//   double average_seconds = (double)average / CLOCKS_PER_SEC;
-//   double minimum_seconds = (double)minimum / CLOCKS_PER_SEC;
-//   double maximum_seconds = (double)maximum / CLOCKS_PER_SEC;
-
-//   snprintf(string, length,
-//     "\n--=[  %s  ]=--\n"
-//     "  Valid runs:%6zu\n"
-//     "  Average   :%7zu (%fs)\n"
-//     "  Minimum   :%7zu (%fs)\n"
-//     "  Maximum   :%7zu (%fs)\n",
-//     test_run->description,
-//     valid_reading_count,
-//     (size_t)average, average_seconds,
-//     (size_t)minimum, minimum_seconds,
-//     (size_t)maximum, maximum_seconds);
-// }
-
-// void PrintTestRun(TestRun* test_run) {
-//   assert(test_run);
-
-//   const size_t buffer_size = 1024;
-//   char buffer[buffer_size];
-
-//   SPrintTestRun(test_run, buffer, buffer_size);
-
-//   printf("%s", buffer);
-// }
+} // namespace SpeedTests

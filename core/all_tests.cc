@@ -1,18 +1,22 @@
+//
+// # All speed tests
+//
 #include "all_tests.h"
 #include "test_core/test_core.h"
 #include "hash_test/hash_test.h"
 
-namespace SpeedTests {
+namespace SpeedTests
+{
 
-void AddAllTests(Runner &runner) {
+void AddAllTests(Runner &runner)
+{
+  // ## Hash map tests
   runner.Add(new HashTestUTHashAdd());
   runner.Add(new HashTestUTHashFind());
-
   runner.Add(new HashTestBoostAdd());
   runner.Add(new HashTestBoostFind());
-
   runner.Add(new HashTestStdAdd());
   runner.Add(new HashTestStdFind());
 }
 
-} // SpeedTests
+} // namespace SpeedTests
