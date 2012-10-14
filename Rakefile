@@ -15,7 +15,7 @@ def command_echoing_output(cmd)
 end
 
 def update_subtree(subtree_dir, git_remote, git_branch = 'master', repo_root = '.')
-   say "<%=color('Running git from #{repo_root}', WHITE, ON_BLUE)%>"
+  say "<%=color('Running git from #{repo_root}', WHITE, ON_BLUE)%>"
   Dir.chdir repo_root do |path|
     command_echoing_output "git subtree pull --squash -P #{subtree_dir} #{git_remote} #{git_branch}"
   end

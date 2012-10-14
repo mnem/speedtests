@@ -1,7 +1,7 @@
 #ifndef SPEEDTESTS_CORE_HASHTEST_H_
 #define SPEEDTESTS_CORE_HASHTEST_H_
 
-#include "../test_core/test_core.h"
+#include "test_core.h"
 #include "uthash.h"
 
 ////////////////////////////////////////

@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BB16CCDC1618B660003F0313 /* all_tests.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB16CCD31618B660003F0313 /* all_tests.cc */; };
-		BB16CCDD1618B660003F0313 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = BB16CCD51618B660003F0313 /* CMakeLists.txt */; };
-		BB16CCDE1618B660003F0313 /* hash_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB16CCD71618B660003F0313 /* hash_test.cc */; };
-		BB16CCDF1618B660003F0313 /* test_core.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB16CCDA1618B660003F0313 /* test_core.cc */; };
 		BB6CF4281618B3B8009DC1FF /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6CF41E1618B3B8009DC1FF /* Icon-72.png */; };
 		BB6CF4291618B3B8009DC1FF /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6CF41F1618B3B8009DC1FF /* Icon-72@2x.png */; };
 		BB6CF42A1618B3B8009DC1FF /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6CF4201618B3B8009DC1FF /* Icon-Small-50.png */; };
@@ -23,6 +19,9 @@
 		BB6CF4311618B3B8009DC1FF /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = BB6CF4271618B3B8009DC1FF /* iTunesArtwork@2x */; };
 		BB6CF4341618B4D2009DC1FF /* Icon-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6CF4321618B4D2009DC1FF /* Icon-ipad.png */; };
 		BB6CF4351618B4D2009DC1FF /* Icon-ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6CF4331618B4D2009DC1FF /* Icon-ipad@2x.png */; };
+		BB8923CC162B1D92001C482B /* test_core.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB8923C9162B1D92001C482B /* test_core.cc */; };
+		BB8923D5162B1DA5001C482B /* all_tests.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB8923CE162B1DA5001C482B /* all_tests.cc */; };
+		BB8923D8162B1DA5001C482B /* hash_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB8923D2162B1DA5001C482B /* hash_test.cc */; };
 		BBC00EB71617C9F200298F85 /* LMiOSTestMonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = BBC00EB51617C9F100298F85 /* LMiOSTestMonitor.cc */; };
 		BBC0E71A1617B6D000298F85 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC0E7191617B6D000298F85 /* UIKit.framework */; };
 		BBC0E71C1617B6D000298F85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC0E71B1617B6D000298F85 /* Foundation.framework */; };
@@ -39,13 +38,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BB16CCD31618B660003F0313 /* all_tests.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = all_tests.cc; sourceTree = "<group>"; };
-		BB16CCD41618B660003F0313 /* all_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = all_tests.h; sourceTree = "<group>"; };
-		BB16CCD51618B660003F0313 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		BB16CCD71618B660003F0313 /* hash_test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hash_test.cc; sourceTree = "<group>"; };
-		BB16CCD81618B660003F0313 /* hash_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_test.h; sourceTree = "<group>"; };
-		BB16CCDA1618B660003F0313 /* test_core.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test_core.cc; sourceTree = "<group>"; };
-		BB16CCDB1618B660003F0313 /* test_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test_core.h; sourceTree = "<group>"; };
 		BB6CF41E1618B3B8009DC1FF /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = SOURCE_ROOT; };
 		BB6CF41F1618B3B8009DC1FF /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = SOURCE_ROOT; };
 		BB6CF4201618B3B8009DC1FF /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = SOURCE_ROOT; };
@@ -58,6 +50,13 @@
 		BB6CF4271618B3B8009DC1FF /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = SOURCE_ROOT; };
 		BB6CF4321618B4D2009DC1FF /* Icon-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-ipad.png"; sourceTree = SOURCE_ROOT; };
 		BB6CF4331618B4D2009DC1FF /* Icon-ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-ipad@2x.png"; sourceTree = SOURCE_ROOT; };
+		BB8923C9162B1D92001C482B /* test_core.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test_core.cc; sourceTree = "<group>"; };
+		BB8923CA162B1D92001C482B /* test_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test_core.h; sourceTree = "<group>"; };
+		BB8923CE162B1DA5001C482B /* all_tests.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = all_tests.cc; sourceTree = "<group>"; };
+		BB8923CF162B1DA5001C482B /* all_tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = all_tests.h; sourceTree = "<group>"; };
+		BB8923D2162B1DA5001C482B /* hash_test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hash_test.cc; sourceTree = "<group>"; };
+		BB8923D3162B1DA5001C482B /* hash_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_test.h; sourceTree = "<group>"; };
+		BB8923D4162B1DA5001C482B /* mathlib_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mathlib_test.h; sourceTree = "<group>"; };
 		BBC00EB51617C9F100298F85 /* LMiOSTestMonitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LMiOSTestMonitor.cc; sourceTree = "<group>"; };
 		BBC00EB61617C9F100298F85 /* LMiOSTestMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMiOSTestMonitor.h; sourceTree = "<group>"; };
 		BBC0E7151617B6D000298F85 /* speedy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,37 +92,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BB16CCD21618B660003F0313 /* core */ = {
-			isa = PBXGroup;
-			children = (
-				BB16CCD31618B660003F0313 /* all_tests.cc */,
-				BB16CCD41618B660003F0313 /* all_tests.h */,
-				BB16CCD51618B660003F0313 /* CMakeLists.txt */,
-				BB16CCD61618B660003F0313 /* hash_test */,
-				BB16CCD91618B660003F0313 /* test_core */,
-			);
-			name = core;
-			path = ../../core;
-			sourceTree = "<group>";
-		};
-		BB16CCD61618B660003F0313 /* hash_test */ = {
-			isa = PBXGroup;
-			children = (
-				BB16CCD71618B660003F0313 /* hash_test.cc */,
-				BB16CCD81618B660003F0313 /* hash_test.h */,
-			);
-			path = hash_test;
-			sourceTree = "<group>";
-		};
-		BB16CCD91618B660003F0313 /* test_core */ = {
-			isa = PBXGroup;
-			children = (
-				BB16CCDA1618B660003F0313 /* test_core.cc */,
-				BB16CCDB1618B660003F0313 /* test_core.h */,
-			);
-			path = test_core;
-			sourceTree = "<group>";
-		};
 		BB6CF41D1618B3AC009DC1FF /* icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,10 +111,34 @@
 			name = icons;
 			sourceTree = "<group>";
 		};
+		BB8923C7162B1D92001C482B /* core */ = {
+			isa = PBXGroup;
+			children = (
+				BB8923C9162B1D92001C482B /* test_core.cc */,
+				BB8923CA162B1D92001C482B /* test_core.h */,
+			);
+			name = core;
+			path = ../../core;
+			sourceTree = "<group>";
+		};
+		BB8923CD162B1DA5001C482B /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				BB8923CE162B1DA5001C482B /* all_tests.cc */,
+				BB8923CF162B1DA5001C482B /* all_tests.h */,
+				BB8923D2162B1DA5001C482B /* hash_test.cc */,
+				BB8923D3162B1DA5001C482B /* hash_test.h */,
+				BB8923D4162B1DA5001C482B /* mathlib_test.h */,
+			);
+			name = tests;
+			path = ../../tests;
+			sourceTree = "<group>";
+		};
 		BBC0E70A1617B6D000298F85 = {
 			isa = PBXGroup;
 			children = (
-				BB16CCD21618B660003F0313 /* core */,
+				BB8923CD162B1DA5001C482B /* tests */,
+				BB8923C7162B1D92001C482B /* core */,
 				BBC0E71F1617B6D000298F85 /* speedy */,
 				BBC0E7181617B6D000298F85 /* Frameworks */,
 				BBC0E7161617B6D000298F85 /* Products */,
@@ -272,7 +264,6 @@
 				BB6CF4311618B3B8009DC1FF /* iTunesArtwork@2x in Resources */,
 				BB6CF4341618B4D2009DC1FF /* Icon-ipad.png in Resources */,
 				BB6CF4351618B4D2009DC1FF /* Icon-ipad@2x.png in Resources */,
-				BB16CCDD1618B660003F0313 /* CMakeLists.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,9 +278,9 @@
 				BBC0E72A1617B6D000298F85 /* NHAppDelegate.mm in Sources */,
 				BBC0E7391617B6D000298F85 /* NHViewController.mm in Sources */,
 				BBC00EB71617C9F200298F85 /* LMiOSTestMonitor.cc in Sources */,
-				BB16CCDC1618B660003F0313 /* all_tests.cc in Sources */,
-				BB16CCDE1618B660003F0313 /* hash_test.cc in Sources */,
-				BB16CCDF1618B660003F0313 /* test_core.cc in Sources */,
+				BB8923CC162B1D92001C482B /* test_core.cc in Sources */,
+				BB8923D5162B1DA5001C482B /* all_tests.cc in Sources */,
+				BB8923D8162B1DA5001C482B /* hash_test.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,7 +374,7 @@
 				INFOPLIST_FILE = "speedy/speedy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "../../core ../../external/uthash/1_9_6 ../../external/boost/1_51_0";
+				USER_HEADER_SEARCH_PATHS = "../../external/uthash/1_9_6 ../../external/boost/1_51_0 ../../external/eigen/3_1_1 ../../external/glm ../../external/cml/1_0_3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -397,7 +388,7 @@
 				INFOPLIST_FILE = "speedy/speedy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "../../core ../../external/uthash/1_9_6 ../../external/boost/1_51_0";
+				USER_HEADER_SEARCH_PATHS = "../../external/uthash/1_9_6 ../../external/boost/1_51_0 ../../external/eigen/3_1_1 ../../external/glm ../../external/cml/1_0_3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

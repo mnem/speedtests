@@ -9,7 +9,7 @@
 #ifndef __speedy__LMiOSTestMonitor__
 #define __speedy__LMiOSTestMonitor__
 
-#include "test_core/test_core.h"
+#include "test_core.h"
 #include <stdio.h>
 
 class LMiOSTestMonitor : public SpeedTests::TestProgressInterface

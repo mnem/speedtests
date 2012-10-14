@@ -1,11 +1,11 @@
 #ifndef SPEEDTESTS_HOST_CLI_TEST_MONITOR_H_
 #define SPEEDTESTS_HOST_CLI_TEST_MONITOR_H_
 
-#include "test_core/test_core.h"
+#include "test_core.h"
 
 class CLITestMonitor : public SpeedTests::TestProgressInterface
 {
-public:
+ public:
   CLITestMonitor();
   virtual ~CLITestMonitor();
 
@@ -16,6 +16,12 @@ public:
   virtual void TestAdded(const SpeedTests::Runner &runner, const SpeedTests::SpeedTest &test);
   virtual void BeforeEverything(const SpeedTests::Runner &runner);
   virtual void AfterEverything(const SpeedTests::Runner &runner);
+
+  bool output_tabbed;
+
+ private:
+  virtual void PrintResultsPretty(const SpeedTests::Runner &runner);
+  virtual void PrintResultsTabbed(const SpeedTests::Runner &runner);
 };
 
 #endif // SPEEDTESTS_HOST_CLI_TEST_MONITOR_H_

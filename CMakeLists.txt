@@ -4,4 +4,5 @@ project(SPEEDTESTS)
 set(CMAKE_BUILD_TYPE Release)
 
 add_subdirectory(core)
+add_subdirectory(tests)
 add_subdirectory(hosts/cli)

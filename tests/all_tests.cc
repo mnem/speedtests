@@ -2,8 +2,8 @@
 // # All speed tests
 //
 #include "all_tests.h"
-#include "test_core/test_core.h"
-#include "hash_test/hash_test.h"
+#include "test_core.h"
+#include "hash_test.h"
 
 namespace SpeedTests
 {

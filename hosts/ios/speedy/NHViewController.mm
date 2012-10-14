@@ -9,7 +9,7 @@
 #import "NHViewController.h"
 
 #include "all_tests.h"
-#include "test_core/test_core.h"
+#include "test_core.h"
 #include "LMiOSTestMonitor.h"
 
 

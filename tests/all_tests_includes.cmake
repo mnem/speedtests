@@ -1,0 +1,9 @@
+include_directories(
+  ${SPEEDTESTS_SOURCE_DIR}/core
+  ${SPEEDTESTS_SOURCE_DIR}/tests
+  ${SPEEDTESTS_SOURCE_DIR}/external/boost/1_51_0
+  ${SPEEDTESTS_SOURCE_DIR}/external/uthash/1_9_6
+  ${SPEEDTESTS_SOURCE_DIR}/external/cml/1_0_3
+  ${SPEEDTESTS_SOURCE_DIR}/external/eigen/3_1_1
+  ${SPEEDTESTS_SOURCE_DIR}/external/glm
+)
