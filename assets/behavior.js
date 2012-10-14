@@ -189,6 +189,111 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "depth": 2
         }
       ]
+    }, {
+      "type": "folder",
+      "data": {
+        "path": "tests",
+        "title": "tests"
+      },
+      "depth": 1,
+      "children": [
+        {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".cpp", ".hpp", ".c++", ".h++", ".cc", ".hh", ".cxx", ".hxx"],
+              "pygmentsLexer": "cpp",
+              "singleLineComment": ["//"],
+              "name": "C++"
+            },
+            "sourcePath": "/Users/mnem/Developer/github/mnem/speedtests/tests/all_tests.cc",
+            "projectPath": "tests/all_tests.cc",
+            "targetPath": "tests/all_tests",
+            "firstHeader": {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "All speed tests",
+                "slug": "all-speed-tests",
+                "isFileHeader": true
+              },
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Hash map tests",
+                    "slug": "hash-map-tests"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Math lib tests",
+                    "slug": "math-lib-tests"
+                  },
+                  "depth": 2
+                }
+              ]
+            },
+            "title": "All speed tests"
+          },
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "Hash map tests",
+                "slug": "hash-map-tests"
+              },
+              "depth": 2
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "Math lib tests",
+                "slug": "math-lib-tests"
+              },
+              "depth": 2
+            }
+          ]
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".cpp", ".hpp", ".c++", ".h++", ".cc", ".hh", ".cxx", ".hxx"],
+              "pygmentsLexer": "cpp",
+              "singleLineComment": ["//"],
+              "name": "C++"
+            },
+            "sourcePath": "/Users/mnem/Developer/github/mnem/speedtests/tests/hash_test.cc",
+            "projectPath": "tests/hash_test.cc",
+            "targetPath": "tests/hash_test",
+            "title": "hash_test"
+          },
+          "depth": 2,
+          "outline": []
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".cpp", ".hpp", ".c++", ".h++", ".cc", ".hh", ".cxx", ".hxx"],
+              "pygmentsLexer": "cpp",
+              "singleLineComment": ["//"],
+              "name": "C++"
+            },
+            "sourcePath": "/Users/mnem/Developer/github/mnem/speedtests/tests/mathlib_test.cc",
+            "projectPath": "tests/mathlib_test.cc",
+            "targetPath": "tests/mathlib_test",
+            "title": "mathlib_test"
+          },
+          "depth": 2,
+          "outline": []
+        }
+      ]
     }
   ];
 

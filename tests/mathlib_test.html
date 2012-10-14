@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="en"><head><title>tests/mathlib_test</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="tests/mathlib_test"><meta name="groc-project-path" content="tests/mathlib_test.cc"><meta name="groc-github-url" content="https://github.com/mnem/speedtests"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/mnem/speedtests/blob/master/tests/mathlib_test.cc">tests/mathlib_test.cc</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="cp">#include &quot;mathlib_test.h&quot;</span>
+<span class="cp">#include &lt;assert.h&gt;</span>
+
+<span class="k">const</span> <span class="n">size_t</span> <span class="n">kInternalTestIterations</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>//////////////////////////////////////////////////////////////////////
+Eigen</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">MathLibTestEigenBase</span><span class="o">::</span><span class="n">BeforeTestIterations</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">a</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1234f</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1234f</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.1234f</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+
+  <span class="n">b</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.5678f</span><span class="p">;</span>
+  <span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.5678f</span><span class="p">;</span>
+  <span class="n">b</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.5678f</span><span class="p">;</span>
+  <span class="n">b</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MathLibTestEigenAdd</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">volatile</span> <span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kInternalTestIterations</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MathLibTestEigenMultiply</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">volatile</span> <span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kInternalTestIterations</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>//////////////////////////////////////////////////////////////////////
+GLM</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">MathLibTestGLMBase</span><span class="o">::</span><span class="n">BeforeTestIterations</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1234f</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1234f</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1234f</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+
+  <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5678f</span><span class="p">;</span>
+  <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5678f</span><span class="p">;</span>
+  <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5678f</span><span class="p">;</span>
+  <span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MathLibTestGLMAdd</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">volatile</span> <span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kInternalTestIterations</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MathLibTestGLMMultiply</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">volatile</span> <span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kInternalTestIterations</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>//////////////////////////////////////////////////////////////////////
+CML</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">MathLibTestCMLBase</span><span class="o">::</span><span class="n">BeforeTestIterations</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">set_basis_element</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1234f</span><span class="p">);</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">set_basis_element</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1234f</span><span class="p">);</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">set_basis_element</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.1234f</span><span class="p">);</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">set_basis_element</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.1234f</span><span class="p">);</span>
+
+  <span class="n">b</span><span class="p">.</span><span class="n">set_basis_element</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1234f</span><span class="p">);</span>
+  <span class="n">b</span><span class="p">.</span><span class="n">set_basis_element</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1234f</span><span class="p">);</span>
+  <span class="n">b</span><span class="p">.</span><span class="n">set_basis_element</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.1234f</span><span class="p">);</span>
+  <span class="n">b</span><span class="p">.</span><span class="n">set_basis_element</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.1234f</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MathLibTestCMLAdd</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">volatile</span> <span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kInternalTestIterations</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MathLibTestCMLMultiply</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">volatile</span> <span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kInternalTestIterations</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></div></div></div></div></body></html>
