@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>test_core/test_core</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="test_core/test_core"><meta name="groc-project-path" content="core/test_core/test_core.cc"><meta name="groc-github-url" content="https://github.com/mnem/speedtests"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/mnem/speedtests/blob/master/core/test_core/test_core.cc">core/test_core/test_core.cc</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="test-core">Test Core</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="cp">#include &quot;test_core.h&quot;</span>
+<!DOCTYPE html><html lang="en"><head><title>test_core</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="test_core"><meta name="groc-project-path" content="core/test_core.cc"><meta name="groc-github-url" content="https://github.com/mnem/speedtests"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/mnem/speedtests/blob/master/core/test_core.cc">core/test_core.cc</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="test-core">Test Core</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="cp">#include &quot;test_core.h&quot;</span>
 <span class="cp">#include &lt;memory.h&gt;</span>
 <span class="cp">#include &lt;assert.h&gt;</span>
 <span class="cp">#include &lt;string.h&gt;</span>
@@ -46,10 +46,19 @@
 
 <p>Creates a test runner, optionally using the passed
 monitor to output progress and results. <code>monitor</code>
-may be null.</p></div></div><div class="code"><div class="wrapper"><span class="n">Runner</span><span class="o">::</span><span class="n">Runner</span><span class="p">(</span><span class="n">TestProgressInterface</span> <span class="o">*</span><span class="n">monitor</span><span class="p">)</span>
+may be null.</p></div></div><div class="code"><div class="wrapper"><span class="n">Runner</span><span class="o">::</span><span class="n">Runner</span><span class="p">(</span><span class="n">TestProgressInterface</span> <span class="o">*</span><span class="n">monitor</span><span class="p">)</span> <span class="o">:</span>
+  <span class="n">also_destroy_tests_on_destruction_</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span>
+  <span class="n">monitor_</span><span class="p">(</span><span class="n">monitor</span><span class="p">),</span>
+  <span class="n">current_test</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+  <span class="n">current_test_run</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="n">also_destroy_tests_on_destruction_</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-  <span class="n">monitor_</span> <span class="o">=</span> <span class="n">monitor</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">void</span> <span class="n">Runner</span><span class="o">::</span><span class="n">ResetSession</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">current_test</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">current_test_run</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="runner">~Runner</h2>
 
 <p>Deletes the runner, and also calls delete
@@ -76,25 +85,39 @@ a monitor was set on creation of Runner.</p></div></div><div class="code"><div c
       <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">TestAdded</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">);</span>
     <span class="p">}</span>
   <span class="p">}</span>
+<span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="session_has_tests_remaining">session<em>has</em>tests_remaining</h2>
+
+<p>If you batch the test runs, this boolean
+indicates if there are any tests left to
+run after the last batch completed</p></div></div><div class="code"><div class="wrapper"><span class="kt">bool</span> <span class="n">Runner</span><span class="o">::</span><span class="n">session_has_tests_remaining</span><span class="p">()</span> <span class="k">const</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">current_test</span> <span class="o">&lt;</span> <span class="n">tests_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
 <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="run">Run</h2>
 
-<p>Runs all added test, reporting progress to the test
+<p>If run<em>batch</em>size is 0, runs all added tests, reporting progress to the test
 monitor as appropriate (and if a test monitor was
 set during creation).</p>
 
+<p>If run<em>batch</em>size > 0, run that many tests and then return. The function
+may then be called again to run another batch of tests, carrying on from
+the previous batch.</p>
+
 <p>Each test is timed and may be queried afterwards for
-run time statistics.</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">Runner</span><span class="o">::</span><span class="n">Run</span><span class="p">()</span>
-<span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">BeforeEverything</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span>
-
-  <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">test_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">test_index</span> <span class="o">&lt;</span> <span class="n">tests_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">test_index</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">SpeedTest</span> <span class="o">*</span><span class="n">test</span> <span class="o">=</span> <span class="n">tests_</span><span class="p">[</span><span class="n">test_index</span><span class="p">];</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">BeforeTestIterations</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">);</span>
-    <span class="n">test</span><span class="o">-&gt;</span><span class="n">BeforeTestIterations</span><span class="p">();</span>
-
-    <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">iteration</span> <span class="o">&lt;</span> <span class="n">test</span><span class="o">-&gt;</span><span class="n">iterations</span><span class="p">();</span> <span class="o">++</span><span class="n">iteration</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">BeforeTest</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">,</span> <span class="n">iteration</span><span class="p">);</span>
+run time statistics.</p></div></div><div class="code"><div class="wrapper"><span class="kt">void</span> <span class="n">Runner</span><span class="o">::</span><span class="n">Run</span><span class="p">(</span><span class="n">size_t</span> <span class="n">run_batch_size</span><span class="p">)</span>
+<span class="p">{</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Exit early if we know there are no tests to run</p></div></div><div class="code"><div class="wrapper">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">session_has_tests_remaining</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If this is the first test of this session
+and there is a monitor, tell it we're about
+to run</p></div></div><div class="code"><div class="wrapper">  <span class="k">if</span> <span class="p">(</span><span class="n">first_session_test</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">monitor_</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">BeforeEverything</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">};</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Loop through all the tests</p></div></div><div class="code"><div class="wrapper">  <span class="k">while</span> <span class="p">(</span><span class="n">current_test</span> <span class="o">&lt;</span> <span class="n">tests_</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">SpeedTest</span> <span class="o">*</span><span class="n">test</span> <span class="o">=</span> <span class="n">tests_</span><span class="p">[</span><span class="n">current_test</span><span class="p">];</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If this is the first run of this test
+let the monitor and the test know</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="p">(</span><span class="n">current_test_run</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">BeforeTestIterations</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">);</span>
+      <span class="n">test</span><span class="o">-&gt;</span><span class="n">BeforeTestIterations</span><span class="p">();</span>
+    <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>While there are test iterations left, run
+the test and record the results</p></div></div><div class="code"><div class="wrapper">    <span class="k">while</span> <span class="p">(</span><span class="n">current_test_run</span> <span class="o">&lt;</span> <span class="n">test</span><span class="o">-&gt;</span><span class="n">iterations</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">BeforeTest</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">,</span> <span class="n">current_test_run</span><span class="p">);</span>
       <span class="n">test</span><span class="o">-&gt;</span><span class="n">BeforeTest</span><span class="p">();</span>
 
       <span class="n">clock_t</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -104,14 +127,19 @@ run time statistics.</p></div></div><div class="code"><div class="wrapper"><span
       <span class="n">test</span><span class="o">-&gt;</span><span class="n">StoreTiming</span><span class="p">(</span><span class="n">duration</span><span class="p">);</span>
 
       <span class="n">test</span><span class="o">-&gt;</span><span class="n">AfterTest</span><span class="p">();</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">AfterTest</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">,</span> <span class="n">iteration</span><span class="p">);</span>
-    <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">AfterTest</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">,</span> <span class="n">current_test_run</span><span class="p">);</span>
 
-    <span class="n">test</span><span class="o">-&gt;</span><span class="n">AfterTestIterations</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">AfterTestIterations</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">AfterEverything</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span>
+      <span class="o">++</span><span class="n">current_test_run</span><span class="p">;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If we've finished this batch of tests, return. Otherwise
+on to the next run.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="p">(</span><span class="n">run_batch_size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">run_batch_size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">--</span><span class="n">run_batch_size</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell the test and the monitor we've finished
+all the iterations of this test</p></div></div><div class="code"><div class="wrapper">    <span class="n">test</span><span class="o">-&gt;</span><span class="n">AfterTestIterations</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">AfterTestIterations</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">,</span> <span class="o">*</span><span class="n">test</span><span class="p">);</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Move on to the next test, resetting the run counter</p></div></div><div class="code"><div class="wrapper">    <span class="o">++</span><span class="n">current_test</span><span class="p">;</span>
+    <span class="n">current_test_run</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell the monitor we've finished everything</p></div></div><div class="code"><div class="wrapper">  <span class="k">if</span> <span class="p">(</span><span class="n">monitor_</span><span class="p">)</span> <span class="n">monitor_</span><span class="o">-&gt;</span><span class="n">AfterEverything</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="p">}</span> <span class="c1">// namespace SpeedTests</span></div></div></div></div></body></html>

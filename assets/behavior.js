@@ -39,171 +39,19 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "singleLineComment": ["//"],
           "name": "C++"
         },
-        "sourcePath": "/Users/mnem/Developer/github/mnem/speedtests/core/all_tests.cc",
-        "projectPath": "core/all_tests.cc",
-        "targetPath": "all_tests",
+        "sourcePath": "/Users/mnem/Developer/github/mnem/speedtests/core/test_core.cc",
+        "projectPath": "core/test_core.cc",
+        "targetPath": "test_core",
         "firstHeader": {
           "type": "heading",
           "data": {
             "level": 1,
-            "title": "All speed tests",
-            "slug": "all-speed-tests",
+            "title": "Test Core",
+            "slug": "test-core",
             "isFileHeader": true
           },
           "depth": 1,
           "children": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "Hash map tests",
-                "slug": "hash-map-tests"
-              },
-              "depth": 2
-            }
-          ]
-        },
-        "title": "All speed tests"
-      },
-      "depth": 1,
-      "outline": [
-        {
-          "type": "heading",
-          "data": {
-            "level": 2,
-            "title": "Hash map tests",
-            "slug": "hash-map-tests"
-          },
-          "depth": 2
-        }
-      ]
-    }, {
-      "type": "folder",
-      "data": {
-        "path": "hash_test",
-        "title": "hash_test"
-      },
-      "depth": 1,
-      "children": [
-        {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".cpp", ".hpp", ".c++", ".h++", ".cc", ".hh", ".cxx", ".hxx"],
-              "pygmentsLexer": "cpp",
-              "singleLineComment": ["//"],
-              "name": "C++"
-            },
-            "sourcePath": "/Users/mnem/Developer/github/mnem/speedtests/core/hash_test/hash_test.cc",
-            "projectPath": "core/hash_test/hash_test.cc",
-            "targetPath": "hash_test/hash_test",
-            "title": "hash_test"
-          },
-          "depth": 2,
-          "outline": []
-        }
-      ]
-    }, {
-      "type": "folder",
-      "data": {
-        "path": "test_core",
-        "title": "test_core"
-      },
-      "depth": 1,
-      "children": [
-        {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".cpp", ".hpp", ".c++", ".h++", ".cc", ".hh", ".cxx", ".hxx"],
-              "pygmentsLexer": "cpp",
-              "singleLineComment": ["//"],
-              "name": "C++"
-            },
-            "sourcePath": "/Users/mnem/Developer/github/mnem/speedtests/core/test_core/test_core.cc",
-            "projectPath": "core/test_core/test_core.cc",
-            "targetPath": "test_core/test_core",
-            "firstHeader": {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Test Core",
-                "slug": "test-core",
-                "isFileHeader": true
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "total_time",
-                    "slug": "total-time"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "average_time",
-                    "slug": "average-time"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "minimum_time",
-                    "slug": "minimum-time"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "minimum_time",
-                    "slug": "minimum-time"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Runner",
-                    "slug": "runner"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "~Runner",
-                    "slug": "runner"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Add",
-                    "slug": "add"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Run",
-                    "slug": "run"
-                  },
-                  "depth": 2
-                }
-              ]
-            },
-            "title": "Test Core"
-          },
-          "depth": 2,
-          "outline": [
             {
               "type": "heading",
               "data": {
@@ -270,6 +118,75 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "depth": 2
             }
           ]
+        },
+        "title": "Test Core"
+      },
+      "depth": 1,
+      "outline": [
+        {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "total_time",
+            "slug": "total-time"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "average_time",
+            "slug": "average-time"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "minimum_time",
+            "slug": "minimum-time"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "minimum_time",
+            "slug": "minimum-time"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "Runner",
+            "slug": "runner"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "~Runner",
+            "slug": "runner"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "Add",
+            "slug": "add"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "Run",
+            "slug": "run"
+          },
+          "depth": 2
         }
       ]
     }
