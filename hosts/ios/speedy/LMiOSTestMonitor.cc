@@ -1,31 +1,48 @@
 #include "LMiOSTestMonitor.h"
 #include <stdio.h>
 
+const bool kUsePrintf = false;
+
 namespace st = SpeedTests;
 
 void LMiOSTestMonitor::BeforeTestIterations(const st::Runner &runner, const st::SpeedTest &test) {
-	printf("Running: %s\n         ", test.description());
+  if (kUsePrintf) printf("Running: %s\n         ", test.description());
+  
+  delete [] running_;
+  size_t description_length = strlen(test.description());
+  running_ = new char[description_length + 1];
+  strcpy(running_, test.description());
+  
+  progress_ = 0;
 }
 
 void LMiOSTestMonitor::AfterTestIterations(const st::Runner &runner, const st::SpeedTest &test) {
-	printf("\n");
+	if (kUsePrintf) printf("\n");
+  
+  delete [] running_;
+  running_ = new char[1];
+  running_[0] = '\0';
 }
 
 void LMiOSTestMonitor::BeforeTest(const st::Runner &runner, const st::SpeedTest &test, const size_t iteration) {
-	if ((iteration % (10000 / 40)) == 0) {
-		printf("#");
-	}
+  if (kUsePrintf) {
+    if ((iteration % (10000 / 40)) == 0) {
+      printf("#");
+    }
+  }
+  
+  progress_ = (float)iteration / (float)test.iterations();
 }
 
 void LMiOSTestMonitor::AfterTest(const st::Runner &runner, const st::SpeedTest &test, const size_t iteration) {
 }
 
 void LMiOSTestMonitor::TestAdded(const st::Runner &runner, const st::SpeedTest &test) {
-	printf("Test added: %s\n", test.description());
+	if (kUsePrintf) printf("Test added: %s\n", test.description());
 }
 
 void LMiOSTestMonitor::BeforeEverything(const st::Runner &runner) {
-	printf("\nRunning %zu tests.\n\n", runner.tests().size());
+	if (kUsePrintf) printf("\nRunning %zu tests.\n\n", runner.tests().size());
 }
 
 void LMiOSTestMonitor::AfterEverything(const st::Runner &runner) {

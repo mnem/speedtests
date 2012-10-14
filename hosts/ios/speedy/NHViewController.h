@@ -11,7 +11,11 @@
 @interface NHViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UITextView *textView;
-@property (strong, nonatomic) IBOutlet UIProgressView *progressView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activity;
+@property (strong, nonatomic) IBOutlet UIButton *button;
+@property (strong, nonatomic) IBOutlet UILabel *test;
+@property (strong, nonatomic) IBOutlet UIProgressView *progress;
+
 - (IBAction)test:(id)sender;
 
 @end
