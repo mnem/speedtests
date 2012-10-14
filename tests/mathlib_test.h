@@ -1,99 +1,90 @@
-#ifndef SPEEDTESTS_CORE_HASHTEST_H_
-#define SPEEDTESTS_CORE_HASHTEST_H_
+#ifndef SPEEDTESTS_TESTS_MATHLIB_TEST_H_
+#define SPEEDTESTS_TESTS_MATHLIB_TEST_H_
 
 #include "test_core.h"
-#include "uthash.h"
+#include "Eigen/Dense"
+#include "glm/glm.hpp"
+#include "cml/cml.h"
 
-////////////////////////////////////////
-struct SimpleHashable;
-class TestItemStore {
+////////////////////////////////////////////////////////////////////////
+// Eigen
+class MathLibTestEigenBase : public SpeedTests::SpeedTest
+{
  public:
-  TestItemStore();
-  ~TestItemStore();
-
-  struct SimpleHashable *items;
-};
-
-////////////////////////////////////////
-class HashTestUTHashBase : public SpeedTests::SpeedTest {
- public:
-  virtual void BeforeTest();
-  virtual void AfterTest();
- protected:
-  TestItemStore test_items;
-  SimpleHashable *hash_;
-};
-
-class HashTestUTHashAdd : public HashTestUTHashBase {
- public:
-  virtual void Test();
-  virtual const char* description() const { return "UTHash: Add"; };
-};
-
-class HashTestUTHashFind : public HashTestUTHashBase {
- public:
-  virtual void Test();
-  virtual void BeforeTest() {};
-  virtual void AfterTest() {};
   virtual void BeforeTestIterations();
-  virtual void AfterTestIterations();
-  virtual const char* description() const { return "UTHash: Find"; };
-};
 
-////////////////////////////////////////
-#include <boost/unordered_map.hpp>
-typedef boost::unordered_map<char *, int> BoostMap;
-class HashTestBoostBase : public SpeedTests::SpeedTest {
- public:
-  virtual void BeforeTest();
-  virtual void AfterTest();
  protected:
-  TestItemStore test_items;
-  BoostMap *hash_;
+  Eigen::Matrix4f a;
+  Eigen::Matrix4f b;
+  Eigen::Matrix4f result;
 };
 
-class HashTestBoostAdd : public HashTestBoostBase {
+class MathLibTestEigenAdd : public MathLibTestEigenBase
+{
  public:
   virtual void Test();
-  virtual const char* description() const { return "Boost: Add"; };
+  virtual const char* description() const { return "Eigen: Add"; };
 };
 
-class HashTestBoostFind : public HashTestBoostBase {
+class MathLibTestEigenMultiply : public MathLibTestEigenBase
+{
  public:
   virtual void Test();
-  virtual void BeforeTest() {};
-  virtual void AfterTest() {};
+  virtual const char* description() const { return "Eigen: Multiply"; };
+};
+
+////////////////////////////////////////////////////////////////////////
+// GLM
+class MathLibTestGLMBase : public SpeedTests::SpeedTest
+{
+ public:
   virtual void BeforeTestIterations();
-  virtual void AfterTestIterations();
-  virtual const char* description() const { return "Boost: Find"; };
-};
 
-////////////////////////////////////////
-#include <map>
-typedef std::map<char *, int> StdMap;
-class HashTestStdBase : public SpeedTests::SpeedTest {
- public:
-  virtual void BeforeTest();
-  virtual void AfterTest();
  protected:
-  TestItemStore test_items;
-  StdMap *hash_;
+  glm::mat4 a;
+  glm::mat4 b;
+  glm::mat4 result;
 };
 
-class HashTestStdAdd : public HashTestStdBase {
+class MathLibTestGLMAdd : public MathLibTestGLMBase
+{
  public:
   virtual void Test();
-  virtual const char* description() const { return "Std: Add"; };
+  virtual const char* description() const { return "GLM: Add"; };
 };
 
-class HashTestStdFind : public HashTestStdBase {
+class MathLibTestGLMMultiply : public MathLibTestGLMBase
+{
  public:
   virtual void Test();
-  virtual void BeforeTest() {};
-  virtual void AfterTest() {};
+  virtual const char* description() const { return "GLM: Multiply"; };
+};
+
+////////////////////////////////////////////////////////////////////////
+// CML
+class MathLibTestCMLBase : public SpeedTests::SpeedTest
+{
+ public:
   virtual void BeforeTestIterations();
-  virtual void AfterTestIterations();
-  virtual const char* description() const { return "Std: Find"; };
+
+ protected:
+  cml::matrix44f_c a;
+  cml::matrix44f_c b;
+  cml::matrix44f_c result;
 };
 
-#endif // SPEEDTESTS_CORE_HASHTEST_H_
+class MathLibTestCMLAdd : public MathLibTestCMLBase
+{
+ public:
+  virtual void Test();
+  virtual const char* description() const { return "CML: Add"; };
+};
+
+class MathLibTestCMLMultiply : public MathLibTestCMLBase
+{
+ public:
+  virtual void Test();
+  virtual const char* description() const { return "CML: Multiply"; };
+};
+
+#endif // SPEEDTESTS_TESTS_MATHLIB_TEST_H_

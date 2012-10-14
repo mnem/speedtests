@@ -1,12 +1,13 @@
-#ifndef SPEEDTESTS_CORE_HASHTEST_H_
-#define SPEEDTESTS_CORE_HASHTEST_H_
+#ifndef SPEEDTESTS_TESTS_HASH_TEST_H_
+#define SPEEDTESTS_TESTS_HASH_TEST_H_
 
 #include "test_core.h"
 #include "uthash.h"
 
 ////////////////////////////////////////
 struct SimpleHashable;
-class TestItemStore {
+class TestItemStore
+{
  public:
   TestItemStore();
   ~TestItemStore();
@@ -15,7 +16,8 @@ class TestItemStore {
 };
 
 ////////////////////////////////////////
-class HashTestUTHashBase : public SpeedTests::SpeedTest {
+class HashTestUTHashBase : public SpeedTests::SpeedTest
+{
  public:
   virtual void BeforeTest();
   virtual void AfterTest();
@@ -24,13 +26,15 @@ class HashTestUTHashBase : public SpeedTests::SpeedTest {
   SimpleHashable *hash_;
 };
 
-class HashTestUTHashAdd : public HashTestUTHashBase {
+class HashTestUTHashAdd : public HashTestUTHashBase
+{
  public:
   virtual void Test();
   virtual const char* description() const { return "UTHash: Add"; };
 };
 
-class HashTestUTHashFind : public HashTestUTHashBase {
+class HashTestUTHashFind : public HashTestUTHashBase
+{
  public:
   virtual void Test();
   virtual void BeforeTest() {};
@@ -43,7 +47,8 @@ class HashTestUTHashFind : public HashTestUTHashBase {
 ////////////////////////////////////////
 #include <boost/unordered_map.hpp>
 typedef boost::unordered_map<char *, int> BoostMap;
-class HashTestBoostBase : public SpeedTests::SpeedTest {
+class HashTestBoostBase : public SpeedTests::SpeedTest
+{
  public:
   virtual void BeforeTest();
   virtual void AfterTest();
@@ -52,13 +57,15 @@ class HashTestBoostBase : public SpeedTests::SpeedTest {
   BoostMap *hash_;
 };
 
-class HashTestBoostAdd : public HashTestBoostBase {
+class HashTestBoostAdd : public HashTestBoostBase
+{
  public:
   virtual void Test();
   virtual const char* description() const { return "Boost: Add"; };
 };
 
-class HashTestBoostFind : public HashTestBoostBase {
+class HashTestBoostFind : public HashTestBoostBase
+{
  public:
   virtual void Test();
   virtual void BeforeTest() {};
@@ -71,7 +78,8 @@ class HashTestBoostFind : public HashTestBoostBase {
 ////////////////////////////////////////
 #include <map>
 typedef std::map<char *, int> StdMap;
-class HashTestStdBase : public SpeedTests::SpeedTest {
+class HashTestStdBase : public SpeedTests::SpeedTest
+{
  public:
   virtual void BeforeTest();
   virtual void AfterTest();
@@ -80,13 +88,15 @@ class HashTestStdBase : public SpeedTests::SpeedTest {
   StdMap *hash_;
 };
 
-class HashTestStdAdd : public HashTestStdBase {
+class HashTestStdAdd : public HashTestStdBase
+{
  public:
   virtual void Test();
   virtual const char* description() const { return "Std: Add"; };
 };
 
-class HashTestStdFind : public HashTestStdBase {
+class HashTestStdFind : public HashTestStdBase
+{
  public:
   virtual void Test();
   virtual void BeforeTest() {};
@@ -96,4 +106,4 @@ class HashTestStdFind : public HashTestStdBase {
   virtual const char* description() const { return "Std: Find"; };
 };
 
-#endif // SPEEDTESTS_CORE_HASHTEST_H_
+#endif // SPEEDTESTS_TESTS_HASH_TEST_H_

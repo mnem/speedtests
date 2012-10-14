@@ -25,3 +25,8 @@ desc "Update GLM subtree"
 task :update_subtree_glm do
   update_subtree 'external/glm', 'git://github.com/g-truc/glm.git'
 end
+
+desc "Update GLM subtree"
+task :update_subtree_gmgridview do
+  update_subtree 'hosts/ios/external/GMGridView', 'git://github.com/gmoledina/GMGridView.git'
+end
