@@ -1,7 +1,7 @@
 #include "mathlib_test.h"
 #include <assert.h>
 
-const size_t kInternalTestIterations = 10000;
+const size_t kInternalTestIterations = 1000;
 
 ////////////////////////////////////////////////////////////////////////
 // Eigen
