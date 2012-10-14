@@ -77,19 +77,28 @@ class Runner
   ~Runner();
 
   void Add(SpeedTest *test);
-  void Run();
+  void Run(size_t run_batch_size);
+  void RunAll() { Run(0); };
+
+  void ResetSession();
 
   const SpeedTestVector& tests() const { return tests_; };
 
   bool also_destroy_tests_on_destruction() const {return also_destroy_tests_on_destruction_; };
   void set_also_destroy_tests_on_destruction(bool value) { also_destroy_tests_on_destruction_ = value; };
+  bool session_has_tests_remaining() const;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Runner);
 
+  bool first_session_test() const { return current_test == 0 && current_test_run == 0; };
+
   TestProgressInterface *monitor_;
   SpeedTestVector tests_;
   bool also_destroy_tests_on_destruction_;
+
+  size_t current_test;
+  size_t current_test_run;
 };
 
 } // namespace SpeedTests

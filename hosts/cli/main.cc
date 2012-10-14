@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
 
   SpeedTests::AddAllTests(runner);
 
-  runner.Run();
+  runner.RunAll();
 
   return 0;
 }
