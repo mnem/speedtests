@@ -22,6 +22,7 @@
 		BB8923CC162B1D92001C482B /* test_core.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB8923C9162B1D92001C482B /* test_core.cc */; };
 		BB8923D5162B1DA5001C482B /* all_tests.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB8923CE162B1DA5001C482B /* all_tests.cc */; };
 		BB8923D8162B1DA5001C482B /* hash_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB8923D2162B1DA5001C482B /* hash_test.cc */; };
+		BB894B35162B512E001C482B /* mathlib_test.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB894B34162B512E001C482B /* mathlib_test.cc */; };
 		BBC00EB71617C9F200298F85 /* LMiOSTestMonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = BBC00EB51617C9F100298F85 /* LMiOSTestMonitor.cc */; };
 		BBC0E71A1617B6D000298F85 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC0E7191617B6D000298F85 /* UIKit.framework */; };
 		BBC0E71C1617B6D000298F85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC0E71B1617B6D000298F85 /* Foundation.framework */; };
@@ -57,6 +58,7 @@
 		BB8923D2162B1DA5001C482B /* hash_test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hash_test.cc; sourceTree = "<group>"; };
 		BB8923D3162B1DA5001C482B /* hash_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_test.h; sourceTree = "<group>"; };
 		BB8923D4162B1DA5001C482B /* mathlib_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mathlib_test.h; sourceTree = "<group>"; };
+		BB894B34162B512E001C482B /* mathlib_test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mathlib_test.cc; sourceTree = "<group>"; };
 		BBC00EB51617C9F100298F85 /* LMiOSTestMonitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LMiOSTestMonitor.cc; sourceTree = "<group>"; };
 		BBC00EB61617C9F100298F85 /* LMiOSTestMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMiOSTestMonitor.h; sourceTree = "<group>"; };
 		BBC0E7151617B6D000298F85 /* speedy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,11 +126,12 @@
 		BB8923CD162B1DA5001C482B /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				BB894B34162B512E001C482B /* mathlib_test.cc */,
+				BB8923D4162B1DA5001C482B /* mathlib_test.h */,
 				BB8923CE162B1DA5001C482B /* all_tests.cc */,
 				BB8923CF162B1DA5001C482B /* all_tests.h */,
 				BB8923D2162B1DA5001C482B /* hash_test.cc */,
 				BB8923D3162B1DA5001C482B /* hash_test.h */,
-				BB8923D4162B1DA5001C482B /* mathlib_test.h */,
 			);
 			name = tests;
 			path = ../../tests;
@@ -281,6 +284,7 @@
 				BB8923CC162B1D92001C482B /* test_core.cc in Sources */,
 				BB8923D5162B1DA5001C482B /* all_tests.cc in Sources */,
 				BB8923D8162B1DA5001C482B /* hash_test.cc in Sources */,
+				BB894B35162B512E001C482B /* mathlib_test.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
