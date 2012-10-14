@@ -1,4 +1,8 @@
 {
-  "glob": ["core/**/*.cc", "external/**/*.{cc,mm}", "README.md"],
+  "glob": [
+    "core/*.cc",
+    "tests/*.cc",
+    "external/**/*.{cc,mm}",
+    "README.md"],
   "github": true
 }
